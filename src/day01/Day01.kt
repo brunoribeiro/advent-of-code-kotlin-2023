@@ -50,13 +50,8 @@ fun str2Code(str: String, dic: Map<String, Int>): Int {
 
 fun main() {
 
-    fun part1(input: List<String>): Int = input.fold(0) { acc, curr ->
-        acc + str2Code(curr, one)
-    }
-
-    fun part2(input: List<String>): Int = input.fold(0) { acc, curr ->
-        acc + str2Code(curr, two)
-    }
+    fun part1(input: List<String>): Int = input.sumOf { str2Code(it, one) }
+    fun part2(input: List<String>): Int = input.sumOf { str2Code(it, two) }
 
     check(part1(readInput("day01/Day01_test")) == 142)
     check(part2(readInput("day01/Day01_2_test")) == 281)
