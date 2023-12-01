@@ -25,11 +25,11 @@ val two = one + mapOf(
     "six" to 6,
     "seven" to 7,
     "eight" to 8,
-    "nine" to 9,
+    "nine" to 9
 )
 
 
-fun getCode(str: String, dic: Map<String, Int>): Int {
+fun str2Code(str: String, dic: Map<String, Int>): Int {
 
     val lowest = dic.keys
         .map { it to str.indexOf(it) }
@@ -51,13 +51,12 @@ fun getCode(str: String, dic: Map<String, Int>): Int {
 fun main() {
 
     fun part1(input: List<String>): Int = input.fold(0) { acc, curr ->
-        acc + getCode(curr, one)
+        acc + str2Code(curr, one)
     }
 
     fun part2(input: List<String>): Int = input.fold(0) { acc, curr ->
-        acc + getCode(curr, two)
+        acc + str2Code(curr, two)
     }
-
 
     check(part1(readInput("day01/Day01_test")) == 142)
     check(part2(readInput("day01/Day01_2_test")) == 281)
