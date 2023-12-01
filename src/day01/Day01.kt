@@ -31,21 +31,21 @@ val two = one + mapOf(
 
 fun str2Code(str: String, dic: Map<String, Int>): Int {
 
-    val lowest = dic.keys
+    val left = dic.keys
         .map { it to str.indexOf(it) }
         .filter { (_, value) -> value != -1 }
         .minBy { (_, value) -> value }
         .let { (key, _) -> key }
         .let { dic[it] } ?: 0
 
-    val highest = dic.keys
+    val right = dic.keys
         .map { it to str.lastIndexOf(it) }
         .filter { (_, value) -> value != -1 }
         .maxBy { (_, value) -> value }
         .let { (key, _) -> key }
         .let { dic[it] } ?: 0
 
-    return lowest * 10 + highest
+    return left * 10 + right
 }
 
 fun main() {
