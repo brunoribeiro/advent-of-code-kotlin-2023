@@ -30,10 +30,10 @@ fun main() {
         return input.map {
             toRound(it)
         }.sumOf {
-            val tmpMap = mutableMapOf<String, Int>()
+            val sumMap = mutableMapOf<String, Int>()
             it.sets.forEach {
                 it.entries.forEach {
-                    tmpMap.compute(it.key) { _, v ->
+                    sumMap.compute(it.key) { _, v ->
                         if (it.value > (v ?: 0))
                             it.value
                         else
@@ -42,8 +42,8 @@ fun main() {
                 }
             }
 
-            tmpMap.values.reduce { acc, i ->
-                acc * i
+            sumMap.values.reduce { acc, curr ->
+                acc * curr
             }
 
         }
