@@ -22,9 +22,10 @@ fun main() {
 
         return symbols.map { s ->
             s to numbers.filter { n -> isAdjacent(s, n) }
-        }.filter { it.second.size > 1 }
+        }.filter { (_, numbers ) -> numbers.size > 1 }
             .map {
-                it.first to it.second.map { it.token.toInt() }.reduce { acc, i ->
+                (symbol, numbers ) ->
+                symbol to numbers.map { it.token.toInt() }.reduce { acc, i ->
                     acc * i
                 }
             }.sumOf { it.second }
