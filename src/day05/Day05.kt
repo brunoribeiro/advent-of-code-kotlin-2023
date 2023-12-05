@@ -1,54 +1,67 @@
 package day05
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import println
 import readInput
+import kotlin.time.measureTime
 
-fun main() {
-
-    fun part1(input: List<String>): Long {
-
-        val seeds = input.first().split(":")
-            .last().split(" ")
-            .filter { it.isNotBlank() }
-            .map { it.trim().toLong() }
-
-        val maps = toMaps(input)
-
-        return seeds.minOf {
-            maps.fold(it) { acc, curr ->
-                curr.convert(acc)
-            }
-        }
-    }
-
-    fun part2(input: List<String>): Long {
-
-        val seedsRanges = input.first().split(":")
-            .last().split(" ")
-            .filter { it.isNotBlank() }
-            .map { it.trim().toLong() }
-            .chunked(2)
-            .map { it.first() until it.first() + it.last() }
-
-        val maps = toMaps(input)
-
-        return seedsRanges.minOf { range ->
-            range.minOf {
-                maps.fold(it) { acc, curr ->
-                    curr.convert(acc)
-                }
-            }
-        }
-    }
-
+suspend fun main() {
 
     check(part1(readInput("day05/Day05_test")) == 35L)
     check(part2(readInput("day05/Day05_test")) == 46L)
 
     val input = readInput("day05/Day05")
     part1(input).println()
-    part2(input).println()
 
+    measureTime {
+        part2(input).println()
+    }.also {
+        println("${it.inWholeSeconds} Sec")
+    }
+}
+
+
+fun part1(input: List<String>): Long {
+
+    val seeds = input.first().split(":")
+        .last().split(" ")
+        .filter { it.isNotBlank() }
+        .map { it.trim().toLong() }
+
+    val maps = toMaps(input)
+
+    return seeds.minOf {
+        maps.fold(it) { acc, curr ->
+            curr.convert(acc)
+        }
+    }
+}
+
+suspend fun part2(input: List<String>): Long {
+
+    val seedsRanges = input.first().split(":")
+        .last().split(" ")
+        .filter { it.isNotBlank() }
+        .map { it.trim().toLong() }
+        .chunked(2)
+        .map { it.first() until it.first() + it.last() }
+
+    val maps = toMaps(input)
+
+    return coroutineScope {
+        seedsRanges.map { range ->
+            async {
+                range.minOf {
+                    maps.fold(it) { acc, curr ->
+                        curr.convert(acc)
+                    }
+                }
+            }
+        }
+
+    }.awaitAll().min()
 }
 
 
