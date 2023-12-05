@@ -14,16 +14,16 @@ fun main() {
 
         val maps = toMaps(input)
 
-        return seeds.map {
+        return seeds.minOf {
             maps.fold(it) { acc, curr ->
                 curr.convert(acc)
             }
-        }.min()
+        }
     }
 
     fun part2(input: List<String>): Long {
 
-        val seedsRange = input.first().split(":")
+        val seedsRanges = input.first().split(":")
             .last().split(" ")
             .filter { it.isNotBlank() }
             .map { it.trim().toLong() }
@@ -32,8 +32,8 @@ fun main() {
 
         val maps = toMaps(input)
 
-        return seedsRange.minOf { longRange ->
-            longRange.minOf {
+        return seedsRanges.minOf { range ->
+            range.minOf {
                 maps.fold(it) { acc, curr ->
                     curr.convert(acc)
                 }
