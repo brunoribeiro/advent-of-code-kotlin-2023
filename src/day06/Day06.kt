@@ -5,7 +5,7 @@ import readInput
 
 fun main() {
 
-    fun part1(input: List<String>): Long {
+    fun part1(input: List<String>): Int {
 
         val raceInfos = input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
             .let { inp ->
@@ -19,7 +19,7 @@ fun main() {
             .map { info ->
                 (0..info.duration).map {
                     Race(it, (info.duration - it) * it)
-                }.filter { it.distance > info.record }.size.toLong()
+                }.filter { it.distance > info.record }.size
             }.reduce { acc, i -> i * acc }
 
 
@@ -41,7 +41,7 @@ fun main() {
     }
 
 
-    check(part1(readInput("day06/Day06_test")) == 288L)
+    check(part1(readInput("day06/Day06_test")) == 288)
     check(part2(readInput("day06/Day06_test")) == 71503)
 
     val input = readInput("day06/Day06")
