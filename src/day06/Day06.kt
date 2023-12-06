@@ -18,13 +18,11 @@ fun main() {
     fun part2(input: List<String>): Long =
         input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
             .let {
-                val (duration, record) =
-                    it[0].joinToString("").toLong() to it[1].joinToString("").toLong()
-                val start = (1 .. duration).find { press -> (duration - press) * press > record } ?: 0
-                val end = (duration downTo 1).find { press -> (duration - press) * press > record } ?: 0
-                duration - (start + (duration - end))+1
+                val (duration, record) = it[0].joinToString("").toLong() to it[1].joinToString("").toLong()
+                val start = (1..<duration).find { press -> (duration - press) * press > record } ?: 0
+                val end = (duration-2 downTo start).find { press -> (duration - press) * press > record } ?: 0
+                end - start + 1
             }
-
 
     check(part1(readInput("day06/Day06_test")) == 288)
     check(part2(readInput("day06/Day06_test")) == 71503L)
@@ -35,6 +33,6 @@ fun main() {
         val input = readInput("day06/Day06")
         part1(input).println()
         part2(input).println()
-    }.also { println("${it.inWholeMilliseconds}ms") }
+    }.also { println("time: ${it.inWholeMilliseconds}ms") }
 
 }
