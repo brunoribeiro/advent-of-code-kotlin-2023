@@ -2,6 +2,7 @@ package day06
 
 import println
 import readInput
+import kotlin.time.measureTime
 
 fun main() {
 
@@ -14,20 +15,26 @@ fun main() {
     }.reduce { acc, i -> i * acc }
 
 
-    fun part2(input: List<String>): Int =
+    fun part2(input: List<String>): Long =
         input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
             .let {
                 val (duration, record) =
                     it[0].joinToString("").toLong() to it[1].joinToString("").toLong()
-                (0..duration).filter { press -> (duration - press) * press > record }.size
+                val start = (1 .. duration).find { press -> (duration - press) * press > record } ?: 0
+                val end = (duration downTo 1).find { press -> (duration - press) * press > record } ?: 0
+                duration - (start + (duration - end))+1
             }
 
 
     check(part1(readInput("day06/Day06_test")) == 288)
-    check(part2(readInput("day06/Day06_test")) == 71503)
+    check(part2(readInput("day06/Day06_test")) == 71503L)
 
-    val input = readInput("day06/Day06")
-    part1(input).println()
-    part2(input).println()
+
+
+    measureTime {
+        val input = readInput("day06/Day06")
+        part1(input).println()
+        part2(input).println()
+    }.also { println("${it.inWholeMilliseconds}ms") }
 
 }
