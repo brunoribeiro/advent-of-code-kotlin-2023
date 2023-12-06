@@ -7,7 +7,7 @@ fun main() {
 
     fun part1(input: List<String>): Long {
 
-        val raceInfo = input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
+        val raceInfos = input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
             .let { inp ->
                 (0..<inp[0].size)
                     .map {
@@ -15,11 +15,11 @@ fun main() {
                     }
             }
 
-        return raceInfo
-            .map { inp ->
-                (0..inp.duration).map {
-                    Race(it, (inp.duration - it) * it)
-                }.filter { it.distance > inp.record }.size.toLong()
+        return raceInfos
+            .map { info ->
+                (0..info.duration).map {
+                    Race(it, (info.duration - it) * it)
+                }.filter { it.distance > info.record }.size.toLong()
             }.reduce { acc, i -> i * acc }
 
 
@@ -27,17 +27,17 @@ fun main() {
 
     fun part2(input: List<String>): Int {
 
-        val record = input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
+        val raceInfo = input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
             .let { inp ->
                 RaceInfo(inp[0].joinToString("").toLong(), inp[1].joinToString("").toLong())
             }
 
-        return listOf(record)
-            .map { inp ->
-                (0..inp.duration).map {
-                    Race(it, (inp.duration - it) * it)
-                }.filter { it.distance > inp.record }.size
-            }.reduce { acc, i -> i * acc }
+        return raceInfo
+            .let { info ->
+                (0..info.duration).map {
+                    Race(it, (info.duration - it) * it)
+                }.filter { it.distance > info.record }.size
+            }
     }
 
 
