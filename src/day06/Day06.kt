@@ -11,7 +11,7 @@ fun main() {
             .let { inp ->
                 (0..<inp[0].size)
                     .map {
-                        RaceRecord(inp[0][it].toLong(), inp[1][it].toLong())
+                        RaceInfo(inp[0][it].toLong(), inp[1][it].toLong())
                     }
             }
 
@@ -29,7 +29,7 @@ fun main() {
 
         val record = input.map { it.split(":").last().split(" ").filter { it.isNotBlank() } }
             .let { inp ->
-                RaceRecord(inp[0].joinToString("").toLong(), inp[1].joinToString("").toLong())
+                RaceInfo(inp[0].joinToString("").toLong(), inp[1].joinToString("").toLong())
             }
 
         return listOf(record)
@@ -50,5 +50,5 @@ fun main() {
 
 }
 
-data class RaceRecord(val duration: Long, val record: Long)
+data class RaceInfo(val duration: Long, val record: Long)
 data class Race(val press: Long, val distance: Long)
