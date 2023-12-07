@@ -7,26 +7,19 @@ import kotlin.time.measureTime
 
 fun main() {
 
-    fun part1(input: List<String>): Int {
-
-        return input.map {
-            it.split(" ").let { Hand(it.first(), it.last().toInt()) }
-        }.sortedBy { it }
-            .mapIndexed { idx, hand ->
-                hand.bid * (idx + 1)
-            }.sum()
-
-    }
-
-    fun part2(input: List<String>): Int {
-       return input.map {
-            it.split(" ").let { Hand(it.first(), it.last().toInt(), true) }
-        }.sortedBy { it }
-            .mapIndexed { idx, hand ->
+    fun part1(input: List<String>): Int = input.map {
+        it.split(" ").let { Hand(it.first(), it.last().toInt()) }
+    }.sortedBy { it }
+        .mapIndexed { idx, hand ->
             hand.bid * (idx + 1)
         }.sum()
 
-    }
+    fun part2(input: List<String>): Int = input.map {
+         it.split(" ").let { Hand(it.first(), it.last().toInt(), true) }
+     }.sortedBy { it }
+         .mapIndexed { idx, hand ->
+         hand.bid * (idx + 1)
+     }.sum()
 
     check(part1(readInput("day07/Day07_test")) == 6440)
     check(part2(readInput("day07/Day07_test")) == 5905)
