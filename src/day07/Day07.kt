@@ -78,11 +78,13 @@ enum class HandType {
                 FULL_HOUSE -> FIVE_OF_A_KIND
                 else -> FOUR_OF_A_KIND
             }
+
             2 -> when (this) {
                 FULL_HOUSE -> FIVE_OF_A_KIND
                 TWO_PAIR -> FOUR_OF_A_KIND
                 else -> THREE_OF_A_KIND
             }
+
             else -> when (this) {
                 FOUR_OF_A_KIND -> FIVE_OF_A_KIND
                 THREE_OF_A_KIND -> FOUR_OF_A_KIND
