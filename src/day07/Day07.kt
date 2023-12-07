@@ -62,6 +62,7 @@ val cardOrderMap = mapOf(
 
 
 enum class HandType {
+
     HIGH_CARD,
     ONE_PAR,
     TWO_PAIR,
@@ -99,6 +100,7 @@ enum class HandType {
 
 
 data class Hand(val cards: String, val bid: Int, val special: Boolean = false) : Comparable<Hand> {
+
     private fun type(): HandType {
         val key = cards.groupBy { it }
             .map { it.value.size }.sorted().asReversed()
@@ -107,6 +109,7 @@ data class Hand(val cards: String, val bid: Int, val special: Boolean = false) :
     }
 
     private fun jokers() = cards.filter { it == 'J' }.length
+
     override fun compareTo(other: Hand): Int {
 
         val type1 = type()
